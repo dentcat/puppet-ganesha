@@ -1,0 +1,15 @@
+---
+ganesha::package_name: nfs-ganesha
+ganesha::package_ensure: present
+ganesha::config_file: /etc/ganesha/ganesha.conf
+ganesha::config_file_owner: root
+ganesha::config_file_group: root
+ganesha::config_file_mode: "0640"
+ganesha::config_hash:
+    NFS_CORE_PARAM:
+        Bind_Addr: 0.0.0.0
+ganesha::service_name: nfs-ganesha
+ganesha::service_manage: true
+ganesha::service_ensure: running
+ganesha::service_enable: true
+ganesha::service_restart: "systemctl restart %{hiera('ganesha::service_name')}"

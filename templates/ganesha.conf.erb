@@ -1,0 +1,22 @@
+<%
+    def render(data, indent)
+        out = ''
+        data.sort.map do |k, v|
+            spaces = ' ' * indent
+            if v.is_a?(Hash)
+                block, _ = k.split('@')
+                so = render(v, indent + 4)
+                out += "#{spaces}#{block} {\n"
+                out += "#{so}"
+                out += "#{spaces}}\n"
+            elsif v.is_a?(Array)
+                so = v.join(', ')
+                out += "#{spaces}#{k} = #{so};\n"
+            else
+                out += "#{spaces}#{k} = #{v};\n"
+            end
+        end
+        return out
+    end
+%>
+<%= render(@config_hash, 0) %>
